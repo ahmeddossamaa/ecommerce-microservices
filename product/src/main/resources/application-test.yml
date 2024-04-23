@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://dpg-coju2f8cmk4c73c40l60-a.oregon-postgres.render.com/ecommerce_vlw8
+    username: batman
+    password: kclJanmxhFfyx0o5bEgix6OhwGReGTPy
+    driver-class-name: org.postgresql.Driver
