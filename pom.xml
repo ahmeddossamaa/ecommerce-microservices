@@ -17,5 +17,7 @@
     <modules>
         <module>product</module>
         <module>user</module>
+        <module>api-gateway</module>
+        <module>eureka</module>
     </modules>
 </project>

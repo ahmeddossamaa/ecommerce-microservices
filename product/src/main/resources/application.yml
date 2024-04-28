@@ -1,7 +1,12 @@
 server:
-  port: 8080
+  port: 8082
 
 spring:
   profiles:
     active:
       - test
+
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://eureka:8761

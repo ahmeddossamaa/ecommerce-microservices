@@ -4,6 +4,7 @@ import com.user.models.Product;
 import com.user.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,5 +19,15 @@ public class UserController {
     @GetMapping("")
     public List<Product> getAll(){
         return this.userService.getAllProducts();
+    }
+
+    @PostMapping("login")
+    public String login(){
+        return "You are logged in!";
+    }
+
+    @PostMapping("signup")
+    public void signup(){
+
     }
 }

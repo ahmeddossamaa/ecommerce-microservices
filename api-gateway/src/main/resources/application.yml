@@ -1,0 +1,18 @@
+server:
+  port: 8080
+
+spring:
+#  main:
+#    web-application-type: reactive
+
+  cloud:
+    gateway:
+      routes:
+        - id: user
+          uri: http://user:8081
+          predicates:
+            - Path=/api/users/**
+        - id: product
+          uri: http://product:8082
+          predicates:
+            - Path=/api/products/**

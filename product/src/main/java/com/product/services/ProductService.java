@@ -17,6 +17,8 @@ public class ProductService {
     }
 
     public Product createProduct(String name){
-        return this.productRepository.save(new Product(name));
+        Product product = new Product(name);
+
+        return this.productRepository.save(product);
     }
 }

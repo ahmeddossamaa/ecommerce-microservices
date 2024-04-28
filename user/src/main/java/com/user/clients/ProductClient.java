@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
-@FeignClient(name = "product", url = "http://product:8080/api/products")
+@FeignClient(name = "product", url = "http://product:8082/api/products")
 public interface ProductClient {
     @GetMapping("")
     List<Product> getAll();
