@@ -36,5 +36,15 @@ services:
     depends_on:
       - product
 
+  # frontend:
+  #   container_name: frontend-service-container
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "3000:3000"
+  #   depends_on:
+  #     - api-gateway
+
 volumes:
   postgres-data:
