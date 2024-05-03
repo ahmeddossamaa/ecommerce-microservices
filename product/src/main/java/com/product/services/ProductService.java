@@ -21,4 +21,18 @@ public class ProductService {
 
         return this.productRepository.save(product);
     }
+    public Product updateProduct(int id, Product updatedProduct) {
+        Product existingProduct = productRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Product with ID " + id + " not found"));
+        existingProduct.setName(updatedProduct.getName());
+        existingProduct.setPrice(updatedProduct.getPrice());
+        existingProduct.setDescription(updatedProduct.getDescription());
+
+        return productRepository.save(existingProduct);
+    }
+    public void deleteProductById(Integer id) {
+        productRepository.deleteById(id);
+    }
+
+
 }

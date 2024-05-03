@@ -25,4 +25,16 @@ public class ProductController {
 
         return this.productService.createProduct(name);
     }
+    @PutMapping("/{id}")
+    public Product update(@PathVariable int id, @RequestBody ProductRequestDTO requestDTO){
+        String name = requestDTO.getName();
+        Double price = requestDTO.getPrice();
+        String description = requestDTO.getDescription();
+        Product newProduct=new Product(name, price, description);
+        return this.productService.updateProduct(id, newProduct);
+    }
+    @DeleteMapping("/{id}")
+    public void deleteProductById(@PathVariable int id) {
+        productService.deleteProductById(id);
+    }
 }
