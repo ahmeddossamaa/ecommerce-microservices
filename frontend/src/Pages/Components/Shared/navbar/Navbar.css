@@ -1,0 +1,55 @@
+/* Navbar.css */
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.navbar-list {
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-item {
+  margin-right: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-item img {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}
+
+.navbar-submenu,
+.navbar-select {
+  position: relative;
+}
+
+.help-select,
+.currency-select,
+.ship-to-select {
+  background-color: transparent;
+  padding: 8px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+}
+
+.ship-to {
+  display: flex;
+  align-items: center;
+}
+
+.ship-to img {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}
