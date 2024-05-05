@@ -1,0 +1,48 @@
+.price-section {
+  background-color: white;
+  padding: 20px;
+  border-radius: 4px;
+}
+
+.price-section p {
+  margin: 0;
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+  color: #505050;
+}
+
+.price-section .discount span {
+  color: #fa3434;
+}
+
+.price-section .tax span {
+  color: #00b517;
+}
+
+.price-section hr {
+  margin: 10px 0;
+  border: none;
+  border: 1px solid #dee2e7;
+}
+
+.price-section .total {
+  color: #1c1c1c;
+  font-weight: bold;
+  margin: 20px 0;
+}
+
+.price-section button {
+  height: 40px;
+  width: 100%;
+  background-color: #00b517;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+
+.price-section .payment-icons {
+  margin-left: 12.5px;
+}
