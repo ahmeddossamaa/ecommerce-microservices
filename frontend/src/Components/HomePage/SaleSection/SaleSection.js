@@ -2,6 +2,7 @@ import React from "react";
 import "./SaleSection.css";
 const images = require.context("./assets", true);
 const imageList = images.keys().map((image) => images(image));
+
 const SaleSection = () => {
   return (
     <div className="sale-section">
