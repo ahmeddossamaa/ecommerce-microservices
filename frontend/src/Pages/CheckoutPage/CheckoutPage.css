@@ -1,0 +1,55 @@
+h2 {
+  margin-left: 20px;
+}
+
+.checkout {
+  display: flex;
+  margin: 20px;
+  gap: 20px;
+}
+
+.products-cart {
+  background-color: white;
+  padding: 20px;
+  width: 75%;
+  border-radius: 4px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.back-button {
+  background-color: #127fff;
+  color: white;
+  border-radius: 6px;
+  height: 40px;
+  width: 140px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.back-button img {
+  margin-right: 10px;
+}
+
+.remove-all-button {
+  background-color: white;
+  color: #127fff;
+  border: none;
+  border: 1px solid #dee2e7;
+  border-radius: 6px;
+  width: 100px;
+  height: 40px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.right-section {
+  display: flex;
+  flex-direction: column;
+}

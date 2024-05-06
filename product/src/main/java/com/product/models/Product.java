@@ -1,15 +1,16 @@
 package com.product.models;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 
 @Entity
 @Getter
 @Setter
 @Table(name="products")
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Product {
     private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Integer id;
     private String name;
