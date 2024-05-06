@@ -16,7 +16,7 @@ function CheckoutPage() {
       <h2>My Cart (3)</h2>
       <div className="checkout">
         <div className="products-cart">
-          <div className="products">
+          <div className="checkout-products">
             <Product />
             <Product />
             {/* Add more Product components here for each product */}

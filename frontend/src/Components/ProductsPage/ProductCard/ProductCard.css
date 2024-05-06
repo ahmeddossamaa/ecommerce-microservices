@@ -6,7 +6,7 @@
   padding: 20px;
   display: flex;
   justify-content: space-between;
-  margin: 10px;
+  margin: 5px;
 }
 
 .product-card img {
@@ -59,7 +59,7 @@
   color: #505050;
 }
 
-button {
+.add-to-basket {
   align-self: flex-end;
   padding: 10px 20px;
   background-color: #007bff;
@@ -69,6 +69,6 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+.add-to-basket:hover {
   background-color: #0056b3;
 }

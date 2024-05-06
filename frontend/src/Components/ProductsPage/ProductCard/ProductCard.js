@@ -25,7 +25,7 @@ function ProductCard() {
           Description: Lorem ipsum dolor sit amet consectetur adipisicing elit.
           Quas, quae.
         </p>
-        <button>Add to Basket</button>
+        <button className="add-to-basket">Add to Basket</button>
       </div>
     </div>
   );
