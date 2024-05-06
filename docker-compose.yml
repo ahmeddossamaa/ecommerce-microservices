@@ -26,6 +26,22 @@ services:
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
 
+  order:
+    container_name: order-service-container
+    build:
+      context: ./order
+      dockerfile: Dockerfile
+    ports:
+      - "8083:8083"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://dpg-coju2f8cmk4c73c40l60-a.oregon-postgres.render.com/ecommerce_vlw8
+      SPRING_DATASOURCE_USERNAME: batman
+      SPRING_DATASOURCE_PASSWORD: kclJanmxhFfyx0o5bEgix6OhwGReGTPy
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    depends_on:
+      - user
+
   user:
     container_name: user-service-container
     build:
@@ -33,6 +49,12 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://dpg-coju2f8cmk4c73c40l60-a.oregon-postgres.render.com/ecommerce_vlw8
+      SPRING_DATASOURCE_USERNAME: batman
+      SPRING_DATASOURCE_PASSWORD: kclJanmxhFfyx0o5bEgix6OhwGReGTPy
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
     depends_on:
       - product
 

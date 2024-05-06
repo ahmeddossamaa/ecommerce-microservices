@@ -18,6 +18,6 @@
         <module>product</module>
         <module>user</module>
         <module>api-gateway</module>
-        <module>eureka</module>
+        <module>order</module>
     </modules>
 </project>

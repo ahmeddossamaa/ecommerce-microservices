@@ -4,6 +4,9 @@ import com.product.dto.ProductRequestDTO;
 import com.product.models.Product;
 import com.product.services.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,6 +28,7 @@ public class ProductController {
 
         return this.productService.createProduct(name);
     }
+
     @PutMapping("/{id}")
     public Product update(@PathVariable int id, @RequestBody ProductRequestDTO requestDTO){
         String name = requestDTO.getName();
@@ -33,8 +37,11 @@ public class ProductController {
         Product newProduct=new Product(name, price, description);
         return this.productService.updateProduct(id, newProduct);
     }
+
     @DeleteMapping("/{id}")
-    public void deleteProductById(@PathVariable int id) {
+    public ResponseEntity<String> delete(@PathVariable int id) {
         productService.deleteProductById(id);
+
+        return new ResponseEntity<>("Deleted Successfully!", HttpStatus.OK);
     }
 }
