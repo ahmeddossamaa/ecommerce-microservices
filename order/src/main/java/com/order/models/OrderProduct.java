@@ -1,7 +1,6 @@
 package com.order.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Time;
@@ -15,9 +14,10 @@ import java.util.UUID;
 @Builder
 
 public class OrderProduct {
-
-    private Integer order_id;
-    private Integer product_id;
+    private @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) Integer order_id;
+    private @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) Integer product_id;
     private Integer quantity;
     private Double price;
 
