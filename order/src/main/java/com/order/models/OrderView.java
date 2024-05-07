@@ -10,7 +10,7 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
-@Table(name="orders")
+@Table(name="orders_view")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
