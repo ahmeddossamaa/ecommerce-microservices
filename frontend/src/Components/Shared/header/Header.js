@@ -3,10 +3,16 @@ import Logo from "./Logo";
 import SearchBar from "./SearchBar";
 import Icon from "./Icon";
 import "./Header.css";
-import personIcon from "./assets/person.png";
-import messageIcon from "./assets/message.png";
-import favoriteIcon from "./assets/favorite.png";
-import cartIcon from "./assets/shopping_cart.png";
+
+const images = require.context(
+  "../../../Assets/Components/Shared/header",
+  true
+);
+const imageList = images.keys().reduce((acc, image) => {
+  const name = image.split("./")[1].split(".")[0];
+  acc[name] = images(image);
+  return acc;
+}, {});
 
 const Header = () => {
   return (
@@ -14,10 +20,10 @@ const Header = () => {
       <Logo />
       <SearchBar />
       <div className="icons">
-        <Icon name="Profile" icon={personIcon} />
-        <Icon name="Messages" icon={messageIcon} />
-        <Icon name="Orders" icon={favoriteIcon} />
-        <Icon name="My Cart" icon={cartIcon} />
+        <Icon name="Profile" icon={imageList["person"]} />
+        <Icon name="Messages" icon={imageList["message"]} />
+        <Icon name="Orders" icon={imageList["favorite"]} />
+        <Icon name="My Cart" icon={imageList["shopping_cart"]} />
       </div>
     </header>
   );

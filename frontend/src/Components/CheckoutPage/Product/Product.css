@@ -40,6 +40,11 @@
   margin: 3px 0 10px;
 }
 
+.details-side .product-actions {
+  display: flex;
+  gap: 5px;
+}
+
 .details-side .product-actions .remove {
   background-color: transparent;
   color: #fa3434;
@@ -49,6 +54,7 @@
   border: 1px solid #dee2e7;
   border-radius: 5px;
   box-shadow: 0px 1px 2px 0px rgba(56, 56, 56, 0.08);
+  cursor: pointer;
 }
 
 .details-side .product-actions .save-for-later {
@@ -60,6 +66,7 @@
   border: 1px solid #dee2e7;
   border-radius: 5px;
   box-shadow: 0px 1px 2px 0px rgba(56, 56, 56, 0.08);
+  cursor: pointer;
 }
 
 .product-quantity-info .product-price {

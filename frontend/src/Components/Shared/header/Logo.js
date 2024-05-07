@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "./assets/logo-colored.svg";
+import logo from "../../../Assets/Components/Shared/header/logo-colored.svg";
 const Logo = () => {
   return (
     <div className="logo">

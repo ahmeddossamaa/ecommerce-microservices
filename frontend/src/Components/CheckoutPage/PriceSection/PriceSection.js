@@ -1,7 +1,15 @@
 import React from "react";
 import "./PriceSection.css";
-const images = require.context("./assets", true);
-const imageList = images.keys().map((image) => images(image));
+
+const images = require.context(
+  "../../../Assets/Components/CheckoutPage/PriceSection",
+  true
+);
+const imageList = images.keys().reduce((acc, image) => {
+  const name = image.split("./")[1].split(".")[0];
+  acc[name] = images(image);
+  return acc;
+}, {});
 
 function PriceSection() {
   return (
@@ -23,11 +31,11 @@ function PriceSection() {
       </p>
       <button>Checkout</button>
       <div className="payment-icons">
-        <img src={imageList[2]} alt="" className="usa-express" />
-        <img src={imageList[1]} alt="" className="mastercard" />
-        <img src={imageList[3]} alt="" className="paypal" />
-        <img src={imageList[4]} alt="" className="visa" />
-        <img src={imageList[0]} alt="" className="apple-pay" />
+        <img src={imageList["usa-express"]} alt="" className="usa-express" />
+        <img src={imageList["mastercard"]} alt="" className="mastercard" />
+        <img src={imageList["paypal"]} alt="" className="paypal" />
+        <img src={imageList["visa"]} alt="" className="visa" />
+        <img src={imageList["apple-pay"]} alt="" className="apple-pay" />
       </div>
     </div>
   );

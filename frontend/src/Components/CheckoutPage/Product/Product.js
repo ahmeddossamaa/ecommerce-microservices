@@ -1,7 +1,15 @@
 import React from "react";
 import "./Product.css";
-const images = require.context("./assets", true);
-const imageList = images.keys().map((image) => images(image));
+
+const images = require.context(
+  "../../../Assets/Components/CheckoutPage/Product",
+  true
+);
+const imageList = images.keys().reduce((acc, image) => {
+  const name = image.split("./")[1].split(".")[0];
+  acc[name] = images(image);
+  return acc;
+}, {});
 
 function Product() {
   return (
@@ -9,7 +17,7 @@ function Product() {
       <div className="product-item">
         <div className="details-side">
           <div className="product-image">
-            <img src={imageList[0]} alt="Product 1" />
+            <img src={imageList["t-shirt"]} alt="Product 1" />
           </div>
           <div className="product-info">
             <h3>T-shirts with multiple colors, for men and lady</h3>
