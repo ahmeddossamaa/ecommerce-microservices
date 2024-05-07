@@ -12,7 +12,6 @@ import java.util.UUID;
 @Setter
 @Table(name="orders_products")
 @NoArgsConstructor
-@AllArgsConstructor
 @Builder
 
 public class OrderProduct {
