@@ -46,7 +46,7 @@ class ProductApplicationTests {
 				.price(50000.0)
 				.description("Bike is here")
 				.build();
-		 expectedProduct = Product.builder().id(1)
+		expectedProduct = Product.builder().id(1)
 				.name("Updated Bus")
 				.description("This is an updated bus")
 				.price(500000.0).build();
@@ -80,15 +80,15 @@ class ProductApplicationTests {
 		assertNotNull(updatedProduct);
 		assertThat(updatedProduct).isEqualTo(expectedProduct);
 	}
-    @Test
-    public void testUpdateProduct_ShouldThrowsExceptionForNonExistingProduct() {
-        int productId=1;
-        when(productRepository.findById(anyInt())).thenReturn(Optional.empty());
-        Exception exception = assertThrows(
-                IllegalArgumentException.class,
-                () -> productService.updateProduct(productId,updatedProductDTO));
-        assertEquals(exception.getMessage(), "Product with ID " +productId+ " not found");
-    }
+	@Test
+	public void testUpdateProduct_ShouldThrowsExceptionForNonExistingProduct() {
+		int productId=1;
+		when(productRepository.findById(anyInt())).thenReturn(Optional.empty());
+		Exception exception = assertThrows(
+				IllegalArgumentException.class,
+				() -> productService.updateProduct(productId,updatedProductDTO));
+		assertEquals(exception.getMessage(), "Product with ID " +productId+ " not found");
+	}
 	@Test
 	public void testDeleteProductById_ShouldDeleteProduct() {
 		int productId=1;
@@ -96,6 +96,29 @@ class ProductApplicationTests {
 		doNothing().when(productRepository).deleteById(productId);
 		productService.deleteProduct(productId);
 		verify(productRepository,times(1)).deleteById(productId);
+	}
+	@Test
+	public void testSearchProducts_ShouldReturnProductsByName() {
+		String searchName = "car";
+		List<Product> expectedProducts = Arrays.asList(carProduct);
+		when(productRepository.search(anyString().toLowerCase())).thenReturn(expectedProducts);
+		List<Product> actualProducts = productService.searchProducts(searchName);
+		assertEquals(expectedProducts, actualProducts);
+	}
+	@Test
+	public void testSearchProducts_ShouldReturnAllProductsForEmptySearch() {
+		String emptySearch = "";
+		List<Product> expectedProducts = Arrays.asList(carProduct, bikeProduct);
+		when(productRepository.findAll()).thenReturn(expectedProducts);
+		List<Product> actualProducts = productService.searchProducts(emptySearch);
+		assertEquals(expectedProducts, actualProducts);
+	}
+	@Test
+	public void testSearchProducts_ShouldThrowExceptionForRepositoryError() {
+		String searchName = "error";
+		when(productRepository.search(searchName.toLowerCase())).thenThrow(new RuntimeException("Repository error"));
+		Exception exception = assertThrows(IllegalArgumentException.class, () -> productService.searchProducts(searchName));
+		assertEquals(exception.getMessage(), "Couldn't find any product with name " + searchName);
 	}
 }
 
