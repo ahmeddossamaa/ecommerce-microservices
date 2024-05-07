@@ -6,24 +6,10 @@ import PriceSection from "../../Components/CheckoutPage/PriceSection/PriceSectio
 import DeliveryAdvantages from "../../Components/CheckoutPage/DeliveryAdvantages/DeliveryAdvantages.js";
 import FooterSection from "../../Components/Shared/FooterSection/FooterSection.js";
 import "./CheckoutPage.css";
-import axios from "axios";
 const images = require.context("../../Assets/Pages/CheckoutPage", true);
 const imageList = images.keys().map((image) => images(image));
 
 function CheckoutPage() {
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("http://127.0.0.1:8080/api/products");
-        console.log(response.data);
-      } catch (error) {
-        console.error("Failed to fetch products:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
   return (
     <div>
       <Header />
