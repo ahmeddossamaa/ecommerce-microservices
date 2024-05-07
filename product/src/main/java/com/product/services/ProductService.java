@@ -31,6 +31,17 @@ public class ProductService {
                 .orElseThrow(() -> new IllegalArgumentException("Product with ID " + id + " not found"));
     }
     public void deleteProduct(Integer id) {
-        productRepository.deleteById(id);
+        this.productRepository.deleteById(id);
     }
+    public List<Product> searchProducts(String name) {
+        if (!name.isEmpty()) {
+            try {
+                return this.productRepository.search(name.toLowerCase());
+            } catch (Exception e) {
+                throw new  IllegalArgumentException("Couldn't find any product with name " + name);
+            }
+        }
+        return this.productRepository.findAll();
+    }
+
 }

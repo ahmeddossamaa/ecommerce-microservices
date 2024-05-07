@@ -16,7 +16,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("api/products")
 public class ProductController {
-
     private final ProductService productService;
 
     @GetMapping("")
@@ -29,16 +28,19 @@ public class ProductController {
         Product newProduct=this.productService.createProduct(product);
         return new ResponseEntity<>(newProduct, HttpStatus.CREATED);
     }
-
     @PutMapping("/{id}")
     public ResponseEntity<Product> update(@PathVariable int id, @RequestBody ProductRequestDTO requestDTO){
         Product updatedProduct=this.productService.updateProduct(id,requestDTO);
         return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
     }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable int id) {
         productService.deleteProduct(id);
         return new ResponseEntity<>("Deleted Successfully!", HttpStatus.OK);
+    }
+    @RequestMapping ("/{name}")
+    public ResponseEntity<List<Product>> search(@PathVariable String name) {
+        List<Product> existingProducts=this.productService.searchProducts(name);
+        return new ResponseEntity<>(existingProducts, HttpStatus.FOUND);
     }
 }
