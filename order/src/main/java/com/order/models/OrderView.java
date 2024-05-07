@@ -23,9 +23,10 @@ public class OrderView {
     private UUID user_id;
     private Double total_price;
     private Time created_at;
-    private List<ProductDto> products;
 
-    public OrderView(Integer id, Double total_price, UUID user_id , Time time ,List<ProductDto> products  ){
+    private List<Product> products;
+
+    public OrderView(Integer id, Double total_price, UUID user_id , Time time ,List<Product> products  ){
         super();
         this.id = id;
         this.user_id=user_id;
