@@ -1,18 +1,17 @@
-package com.order.dto;
+package com.order.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-@Entity
-@Setter
+
 @Getter
-@Builder
-public class ProductDto {
-
+@Setter
+@Entity
+public class Product {
+   @Id
+   private Integer id;
     private String name;
-    @Id private Integer id;
-
-
 }
+
+

@@ -17,9 +17,9 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class OrderService {
 
-    private  OrderRepository orderRepository;
-    private OrderProductRepository orderProductRepository;
-    private OrderViewRepository orderViewRepository;
+    private final   OrderRepository orderRepository;
+    private final OrderProductRepository orderProductRepository;
+    private final OrderViewRepository orderViewRepository;
 
     public List<OrderView> getorders(){
         return this.orderViewRepository.findAll();
