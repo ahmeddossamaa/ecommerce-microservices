@@ -1,14 +1,22 @@
 import React from "react";
 import "./DeliveryAdvantages.css";
-const images = require.context("./assets", true);
-const imageList = images.keys().map((image) => images(image));
+
+const images = require.context(
+  "../../../Assets/Components/CheckoutPage/DeliveryAdvantages",
+  true
+);
+const imageList = images.keys().reduce((acc, image) => {
+  const name = image.split("./")[1].split(".")[0];
+  acc[name] = images(image);
+  return acc;
+}, {});
 
 function DeliveryAdvantages() {
   return (
     <div className="delivery-advantages">
       <div className="advantage-item">
         <div className="icon-background">
-          <img src={imageList[1]} alt="" />
+          <img src={imageList["secure_payment"]} alt="" />
         </div>
         <div className="advantage-text">
           <div className="title">Secure payment</div>
@@ -17,7 +25,7 @@ function DeliveryAdvantages() {
       </div>
       <div className="advantage-item">
         <div className="icon-background">
-          <img src={imageList[0]} alt="" />
+          <img src={imageList["customer_support"]} alt="" />
         </div>
         <div className="advantage-text">
           <div className="title">Customer support</div>
@@ -26,7 +34,7 @@ function DeliveryAdvantages() {
       </div>
       <div className="advantage-item">
         <div className="icon-background">
-          <img src={imageList[2]} alt="" />
+          <img src={imageList["free_delivery"]} alt="" />
         </div>
         <div className="advantage-text">
           <div className="title">Free delivery</div>

@@ -44,5 +44,8 @@
 }
 
 .price-section .payment-icons {
-  margin-left: 12.5px;
+  margin-left: 15px;
+}
+.price-section .payment-icons img {
+  margin-left: 2px;
 }

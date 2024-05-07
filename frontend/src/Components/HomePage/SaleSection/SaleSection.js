@@ -1,45 +1,72 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./SaleSection.css";
-const images = require.context("./assets", true);
-const imageList = images.keys().map((image) => images(image));
+const images = require.context(
+  "../../../Assets/Components/HomePage/SaleSection",
+  true
+);
+const imageList = images.keys().reduce((acc, image) => {
+  const name = image.split("./")[1].split(".")[0];
+  acc[name] = images(image);
+  return acc;
+}, {});
 
 const SaleSection = () => {
+  const calculateTimeLeft = () => {
+    const difference = +new Date("2024-05-09") - +new Date();
+    let timeLeft = {};
+
+    if (difference > 0) {
+      timeLeft = {
+        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+        hour: Math.floor((difference / (1000 * 60 * 60)) % 24),
+        min: Math.floor((difference / 1000 / 60) % 60),
+        sec: Math.floor((difference / 1000) % 60),
+      };
+    }
+
+    return timeLeft;
+  };
+
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setTimeLeft(calculateTimeLeft());
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  });
+
+  const timerComponents = [];
+
+  Object.keys(timeLeft).forEach((interval) => {
+    if (!timeLeft[interval]) {
+      return;
+    }
+
+    timerComponents.push(
+      <div className="timer-item" key={interval}>
+        <span>{timeLeft[interval]}</span> {interval}
+      </div>
+    );
+  });
+
   return (
     <div className="sale-section">
       <div className="countdown-section">
         <h3>Deals and offers</h3>
         <p>Hygiene equipments</p>
         <div className="countdown-timer">
-          <div className="timer-item">
-            <div className="days-count">10</div>
-            <div className="days">Days</div>
-          </div>
-          <div className="timer-item">
-            <span>05</span>
-            <span>Hour</span>
-          </div>
-          <div className="timer-item">
-            <span>30</span>
-            <span>Min</span>
-          </div>
-          <div className="timer-item">
-            <span>45</span>
-            <span>Sec</span>
-          </div>
+          {timerComponents.length ? timerComponents : <span>Time's up!</span>}
         </div>
       </div>
-      {/* <div className="categories-section"> */}
-      {/* <div className="category-items"> */}
-      {/* Map through categories and render items */}
-      {[...Array(5)].map((_, index) => (
+      {Object.keys(imageList).map((imageName, index) => (
         <div className="category-item" key={index}>
-          <img src={imageList[index]} alt={`Category ${index + 1}`} />
-          <h3>Category {index + 1}</h3>
+          <img src={imageList[imageName]} alt={imageName} />
+          <h3>{imageName}</h3>
           <div className="discount-badge">-50%</div>
         </div>
       ))}
-      {/* </div> */}
-      {/* </div> */}
     </div>
   );
 };

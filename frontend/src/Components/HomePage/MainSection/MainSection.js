@@ -1,7 +1,14 @@
 import React from "react";
 import "./MainSection.css";
-import bannerImg from "./assets/banner.png";
-import userImg from "./assets/user.png";
+const images = require.context(
+  "../../../Assets/Components/HomePage/MainSection",
+  true
+);
+const imageList = images.keys().reduce((acc, image) => {
+  const name = image.split("./")[1].split(".")[0];
+  acc[name] = images(image);
+  return acc;
+}, {});
 
 const MainSection = () => {
   return (
@@ -17,13 +24,13 @@ const MainSection = () => {
           <li>Category 7</li>
           <li>Category 8</li>
           <li>Category 9</li>
-          <li className="active">Category 10</li>
+          <li>Category 10</li>
           {/* Add more categories here */}
         </ul>
       </div>
       <div className="banner-section">
         <div className="banner">
-          <img src={bannerImg} alt="Banner" />
+          <img src={imageList["banner"]} alt="Banner" />
           <div className="banner-content">
             <h2>Welcome to Our Store</h2>
             <p>Discover amazing products</p>
@@ -33,9 +40,9 @@ const MainSection = () => {
       </div>
       <div className="blocks-section">
         <div className="block block1">
-          <div class="block1-top">
-            <img src={userImg} alt="User" />
-            <div class="text">
+          <div className="block1-top">
+            <img src={imageList["user"]} alt="User" />
+            <div className="text">
               Hi, <span>user</span>
               <div>let's get started</div>
             </div>

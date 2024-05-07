@@ -7,7 +7,7 @@ import DeliveryAdvantages from "../../Components/CheckoutPage/DeliveryAdvantages
 import FooterSection from "../../Components/Shared/FooterSection/FooterSection.js";
 import "./CheckoutPage.css";
 import axios from "axios";
-const images = require.context("./assets", true);
+const images = require.context("../../Assets/Pages/CheckoutPage", true);
 const imageList = images.keys().map((image) => images(image));
 
 function CheckoutPage() {

@@ -1,61 +1,68 @@
 import React from "react";
 import "./FooterSection.css";
-const images = require.context("./assets", true);
-const imageList = images.keys().map((image) => images(image));
+
+const images = require.context(
+  "../../../Assets/Components/Shared/FooterSection",
+  true
+);
+const imageList = images.keys().reduce((acc, image) => {
+  const name = image.split("./")[1].split(".")[0];
+  acc[name] = images(image);
+  return acc;
+}, {});
 
 function FooterSection() {
-  console.log(imageList);
   return (
     <>
       <div className="footer-container">
         <div className="left-section">
-          <img src={imageList[5]} alt="" />
+          <img src={imageList["Logo"]} alt="" />
           <p>
-            Best information about the company gies here but now lorem ipsum is
+            Best information about the company goes here but now lorem ipsum is
           </p>
           <div className="social-media-icons">
             <a href="#">
-              <img src={imageList[1]} alt="Facebook" />
+              <img src={imageList["Facebook"]} alt="Facebook" />
             </a>
             <a href="#">
-              <img src={imageList[6]} alt="Twitter" />
+              <img src={imageList["Twitter"]} alt="Twitter" />
             </a>
             <a href="#">
-              <img src={imageList[4]} alt="Linkedin" />
+              <img src={imageList["Linkedin"]} alt="Linkedin" />
             </a>
             <a href="#">
-              <img src={imageList[3]} alt="Instagram" />
+              <img src={imageList["Instagram"]} alt="Instagram" />
             </a>
             <a href="#">
-              <img src={imageList[8]} alt="Youtube" />
+              <img src={imageList["Youtube"]} alt="Youtube" />
             </a>
           </div>
         </div>
         <div className="footer-section">
-          <h3>Section 2</h3>
+          <h3>About</h3>
           <ul>
-            <li>Login</li>
-            <li>Register</li>
-            <li>Settings</li>
-            <li>My Orders</li>
+            <li>About Us</li>
+            <li>Find store</li>
+            <li>Categories</li>
+            <li>Blogs</li>
           </ul>
         </div>
         <div className="footer-section">
-          <h3>Section 3</h3>
+          <h3>Partnership</h3>
           <ul>
-            <li>Login</li>
-            <li>Register</li>
-            <li>Settings</li>
-            <li>My Orders</li>
+            <li>About Us</li>
+            <li>Find store</li>
+            <li>Categories</li>
+            <li>Blogs</li>
           </ul>
         </div>
         <div className="footer-section">
-          <h3>Section 4</h3>
+          <h3>Information</h3>
           <ul>
-            <li>Login</li>
-            <li>Register</li>
-            <li>Settings</li>
-            <li>My Orders</li>
+            <li>Help Center</li>
+            <li>Money Refund</li>
+            <li>Shipping</li>
+            <li>Contact us</li>
           </ul>
         </div>
         <div className="footer-section">
@@ -70,10 +77,10 @@ function FooterSection() {
         <div className="footer-section">
           <h3>Get App</h3>
           <a href="#">
-            <img src={imageList[0]} alt="App Store" />
+            <img src={imageList["App-Store"]} alt="App Store" />
           </a>
           <a href="#">
-            <img src={imageList[2]} alt="Google Play" />
+            <img src={imageList["Google-Play"]} alt="Google Play" />
           </a>
         </div>
       </div>

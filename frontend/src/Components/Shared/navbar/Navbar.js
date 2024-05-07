@@ -2,7 +2,8 @@
 
 import React from "react";
 import "./Navbar.css";
-import menuIcon from "./assets/menu.png";
+import menuIcon from "../../../Assets/Components/Shared/navbar/menu.png";
+
 const Navbar = () => {
   return (
     <nav className="navbar">
