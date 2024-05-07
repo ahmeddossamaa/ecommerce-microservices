@@ -3,6 +3,9 @@ package com.product.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Collection;
+import java.util.List;
+
 
 @Entity
 @Getter
@@ -16,6 +19,10 @@ public class Product {
     private String name;
     private Double price;
     private String description;
+
+    @Getter(AccessLevel.NONE)
+    @OneToMany(mappedBy = "product")
+    private List<OrderProduct> ordersProducts;
 
     public Product(String name){
         super();

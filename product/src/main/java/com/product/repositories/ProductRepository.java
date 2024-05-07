@@ -11,4 +11,6 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Query("SELECT p FROM Product p WHERE CONCAT(p.name, ' ', p.description) LIKE %?1%")
     List<Product> search(String name);
+
+    List<Product> findByOrdersProductsOrderId(Integer orderId);
 }
