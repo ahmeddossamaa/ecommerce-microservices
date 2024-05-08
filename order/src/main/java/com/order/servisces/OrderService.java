@@ -2,10 +2,8 @@ package com.order.servisces;
 
 import com.order.models.Order;
 import com.order.models.OrderProduct;
-import com.order.models.OrderView;
 import com.order.repositories.OrderProductRepository;
 import com.order.repositories.OrderRepository;
-import com.order.repositories.OrderViewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,19 +15,18 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class OrderService {
 
-    private final   OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
     private final OrderProductRepository orderProductRepository;
-    private final OrderViewRepository orderViewRepository;
 
-    public List<OrderView> getorders(){
-        return this.orderViewRepository.findAll();
+    public List<Order> getOrders(){
+        return this.orderRepository.findAll();
     }
 
     public Order getOrder(Integer id){
         return this.orderRepository.findById(id).orElseThrow();
     }
 
-    public void deleteorder(Integer id) {
+    public void deleteOrder(Integer id) {
         this.orderRepository.deleteById(id);
     }
 

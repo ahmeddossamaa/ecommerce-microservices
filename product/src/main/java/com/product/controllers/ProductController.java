@@ -23,6 +23,14 @@ public class ProductController {
         List<Product>products=this.productService.getProducts();
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
+
+    @GetMapping("/order")
+    public ResponseEntity<List<Product>> getAllByOrderId(@PathVariable Integer id){
+        List<Product> products = this.productService.getProductsByOrderId(id);
+
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
+
     @PostMapping("")
     public ResponseEntity<Product> create(@RequestBody  ProductRequestDTO product){
         Product newProduct=this.productService.createProduct(product);
@@ -42,12 +50,5 @@ public class ProductController {
     public ResponseEntity<List<Product>> search(@PathVariable String name) {
         List<Product> existingProducts=this.productService.searchProducts(name);
         return new ResponseEntity<>(existingProducts, HttpStatus.FOUND);
-    }
-
-    @GetMapping("/order/{id}")
-    public ResponseEntity<List<Product>> getAllByOrderId(@PathVariable Integer id){
-        List<Product> products = this.productService.getProductsByOrderId(id);
-
-        return new ResponseEntity<>(products, HttpStatus.OK);
     }
 }

@@ -4,6 +4,7 @@ import com.order.models.Order;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Time;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Setter
+@Getter
 public class OrderDto {
     private Integer id;
     private UUID user_id;

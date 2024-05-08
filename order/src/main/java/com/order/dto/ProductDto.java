@@ -13,6 +13,7 @@ public class ProductDto {
     private Integer id;
     private String name;
     private Double price;
+    private String description;
 
 
 }
