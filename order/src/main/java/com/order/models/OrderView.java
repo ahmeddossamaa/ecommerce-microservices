@@ -24,15 +24,15 @@ public class OrderView {
     private Double total_price;
     private Time created_at;
 
-    private List<Product> products;
+//    private List<Product> products;
 
-    public OrderView(Integer id, Double total_price, UUID user_id , Time time ,List<Product> products  ){
+    public OrderView(Integer id, Double total_price, UUID user_id , Time time){
         super();
         this.id = id;
         this.user_id=user_id;
         this.total_price = total_price;
         this.created_at = time ;
-        this.products = products;
+//        this.products = products;
     }
 
 

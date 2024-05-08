@@ -1,9 +1,12 @@
 package com.order.controllers;
-
+import com.order.clients.ProductClient;
+import com.order.dto.OrderDto;
+import com.order.dto.ProductDto;
 import com.order.models.Order;
 import com.order.models.OrderProduct;
 import com.order.models.OrderView;
 import com.order.servisces.OrderService;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +18,12 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
+//@AllArgsConstructor
 @RequestMapping("api/orders")
 public class OrderController {
 
-private final OrderService orderService;
+    private final OrderService orderService;
+    private final ProductClient productClient;
 
     @GetMapping("")
     public ResponseEntity<List<OrderView>> getAll(){
@@ -27,28 +32,15 @@ private final OrderService orderService;
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Order> getOne(@PathVariable Integer id){
+    public ResponseEntity<OrderDto> getOne(@PathVariable Integer id){
         Order order = this.orderService.getOrder(id);
+        List<ProductDto> products = this.productClient.getProductById(id);
 
-//        List<Product> products = this.productClient.getProductsById(id);
-//        order.setProducts(products);
+        OrderDto orderDto = new OrderDto(order);
 
-        /*
-        * {
-        *   id: 1,
-        *   created_at: '',
-        *   total_price: 100,
-        *   user_id: '',
-        *   products: [
-        *       {
-        *           id: 1,
-    *               name: ''
-        *       }
-        *   ]
-        * }
-        * */
+        orderDto.setProducts(products);
 
-        return new ResponseEntity<>(order, HttpStatus.OK);
+        return new ResponseEntity<>(orderDto, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

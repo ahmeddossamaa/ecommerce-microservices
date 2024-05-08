@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Time;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -22,7 +23,7 @@ public class Order {
     private UUID user_id;
     private Double total_price;
     private Time created_at;
-
+//    private List<Product> products;
     public Order(Integer id){
         super();
         this.id = id;
@@ -36,5 +37,6 @@ public class Order {
         this.created_at = time ;
 
     }
+
 
 }
