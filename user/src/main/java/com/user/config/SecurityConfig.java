@@ -7,7 +7,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
@@ -20,17 +19,19 @@ import java.util.Collections;
 
 @Configuration
 public class SecurityConfig {
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
         return http.getSharedObject(AuthenticationManagerBuilder.class).build();
     }
 
     @Bean
-    public SecurityFilterChain mySecurityConfig(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter, JwtValidationFilter jwtValidationFilter) throws Exception {
         // CORS configuration
         http
                 .sessionManagement(sessionMangement -> sessionMangement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -47,18 +48,12 @@ public class SecurityConfig {
                 })
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/api/users/**").permitAll()
-//                        .requestMatchers(HttpMethod.POST, "/api/users/login").permitAll()
-//                        .requestMatchers(HttpMethod.GET, "/api/users/").permitAll()
                         .anyRequest().authenticated()
                 )
                 .csrf(csrf -> csrf.disable())  // Disabling CSRF protection
-                .addFilterAfter(new JwtAuthenticationFilter(), BasicAuthenticationFilter.class)
-                .addFilterBefore(new JwtValidationFilter(), BasicAuthenticationFilter.class)
-                .httpBasic(Customizer.withDefaults())
-                .formLogin(Customizer.withDefaults());
+                .addFilterBefore(jwtValidationFilter, BasicAuthenticationFilter.class)
+                .addFilterAfter(jwtAuthenticationFilter, BasicAuthenticationFilter.class);
 
         return http.build();
     }
-
-
 }

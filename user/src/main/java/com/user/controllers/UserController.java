@@ -45,23 +45,35 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<?> signInHandler(@RequestBody User loginRequest) {
-        log.info("Inside login filter ...."+loginRequest.getEmail()+ loginRequest.getPassword());
+        log.info("Attempting to log in user: {}", loginRequest.getEmail());
         try {
-            log.info("Inside try filter ...."+loginRequest.getEmail()+ loginRequest.getPassword());
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword())
+            User user = userService.findUserByEmail(loginRequest.getEmail());
+            if (user == null) {
+                log.error("Login failed for user: {} - User not found", loginRequest.getEmail());
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed: Invalid email or password");
+            }
 
-            );
-            log.info("Inside login try .."+authentication);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            String jwt = userService.generateJwtToken(authentication);
+            if (!userService.validatePassword(loginRequest.getPassword(), user.getPassword())) {
+                log.error("Login failed for user: {} - Invalid password", loginRequest.getEmail());
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed: Invalid email or password");
+            }
 
-            return ResponseEntity.ok().header("Authorization", "Bearer " + jwt).body("Login successful");
-        } catch (AuthenticationException ex) { log.info("Inside the catch  ....");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed: Invalid email or password");
+            log.info("Authentication successful for user: {}", loginRequest.getEmail());
+
+
+            String jwt = userService.generateJwtToken(user);
+
+            return ResponseEntity.ok()
+                    .header("Authorization", "Bearer " + jwt)
+                    .body("Login successful");
+        } catch (UserException ex) {
+            log.error("Login failed for user: {} - {}", loginRequest.getEmail(), ex.getMessage());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed: " + ex.getMessage());
+        } catch (Exception ex) {
+            log.error("Login failed for user: {} - An error occurred", loginRequest.getEmail(), ex);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed: An error occurred");
         }
     }
-
 
 }
