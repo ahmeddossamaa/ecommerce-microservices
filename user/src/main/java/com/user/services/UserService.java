@@ -20,6 +20,18 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    public User findUserByEmail(String email) throws UserException {
+
+        User user = userRepository.findByEmail(email);
+
+        if(user==null)
+        {
+            throw new UserException("No user found with this email : "+email);
+        }
+
+        return user;
+    }
+
     public User registerUser(User user) throws UserException {
         User existingUser = userRepository.findByEmail(user.getEmail());
         if(existingUser != null) {
@@ -30,14 +42,13 @@ public class UserService {
     }
 
     public String generateJwtToken(Authentication authentication) {
-        String username = authentication.getName();
-        SecretKey key = Keys.hmacShaKeyFor("secretshimbhu$77$kumawat~skking99~".getBytes());
+        SecretKey key = Keys.hmacShaKeyFor("secretkey$77$kumawat~skking99~".getBytes());
         return Jwts.builder()
-                .setIssuer("Shimbhu")
-                .setSubject(username)
+                .setIssuer("ecomerce")
+                .setSubject(authentication.getName())
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(new Date().getTime() + 300000)) // 5 minutes for demo
-                .signWith(SignatureAlgorithm.HS512, key)
+                .setExpiration(new Date(System.currentTimeMillis() + 300_000))  // 5 minutes
+                .signWith(key)
                 .compact();
     }
 }
