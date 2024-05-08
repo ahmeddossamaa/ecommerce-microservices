@@ -9,4 +9,7 @@ import java.util.List;
 public interface ProductClient {
     @GetMapping("")
     List<Product> getAll();
+
+    @GetMapping("/order/{id}")
+    List<Product> getProductById(Integer id);
 }

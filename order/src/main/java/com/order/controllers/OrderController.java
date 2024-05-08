@@ -26,6 +26,31 @@ private final OrderService orderService;
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Order> getOne(@PathVariable Integer id){
+        Order order = this.orderService.getOrder(id);
+
+//        List<Product> products = this.productClient.getProductsById(id);
+//        order.setProducts(products);
+
+        /*
+        * {
+        *   id: 1,
+        *   created_at: '',
+        *   total_price: 100,
+        *   user_id: '',
+        *   products: [
+        *       {
+        *           id: 1,
+    *               name: ''
+        *       }
+        *   ]
+        * }
+        * */
+
+        return new ResponseEntity<>(order, HttpStatus.OK);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable int id) {
        orderService.deleteorder(id);

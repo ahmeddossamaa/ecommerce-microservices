@@ -25,11 +25,15 @@ public class OrderService {
         return this.orderViewRepository.findAll();
     }
 
+    public Order getOrder(Integer id){
+        return this.orderRepository.findById(id).orElseThrow();
+    }
+
     public void deleteorder(Integer id) {
         this.orderRepository.deleteById(id);
     }
 
-public Order createOrderWithProducts(UUID user_id, Double total_price, Time created_at, List<OrderProduct> orderProducts) {
+    public Order createOrderWithProducts(UUID user_id, Double total_price, Time created_at, List<OrderProduct> orderProducts) {
         Order newOrder = Order.builder()
                 .user_id(user_id)
                 .total_price(total_price)
