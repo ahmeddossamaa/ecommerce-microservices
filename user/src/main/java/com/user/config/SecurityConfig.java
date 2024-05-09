@@ -20,45 +20,42 @@ import java.util.Collections;
 
 @Configuration
 public class SecurityConfig {
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
         return http.getSharedObject(AuthenticationManagerBuilder.class).build();
     }
 
     @Bean
-    public SecurityFilterChain mySecurityConfig(HttpSecurity http) throws Exception {
-        // CORS configuration
+    public SecurityFilterChain mySecurityConfig(HttpSecurity http, RateLimitingFilter rateLimitingFilter) throws Exception {
         http
-                .sessionManagement(sessionMangement -> sessionMangement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .cors(cors -> {
-                    cors.configurationSource(request -> {
-                        CorsConfiguration cfg = new CorsConfiguration();
-                        cfg.setAllowedOriginPatterns(Collections.singletonList("*"));
-                        cfg.setAllowedMethods(Collections.singletonList("*"));
-                        cfg.setAllowCredentials(true);
-                        cfg.setAllowedHeaders(Collections.singletonList("*"));
-                        cfg.setExposedHeaders(Collections.singletonList("Authorization"));
-                        return cfg;
-                    });
-                })
+                .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .cors(cors -> cors.configurationSource(request -> {
+                    CorsConfiguration cfg = new CorsConfiguration();
+                    cfg.setAllowedOriginPatterns(Collections.singletonList("*"));
+                    cfg.setAllowedMethods(Collections.singletonList("*"));
+                    cfg.setAllowCredentials(true);
+                    cfg.setAllowedHeaders(Collections.singletonList("*"));
+                    cfg.setExposedHeaders(Collections.singletonList("Authorization"));
+                    return cfg;
+                }))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, "/api/users/**").permitAll()
-//                        .requestMatchers(HttpMethod.POST, "/api/users/login").permitAll()
-//                        .requestMatchers(HttpMethod.GET, "/api/users/").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/users/signup").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/users/login").permitAll()
                         .anyRequest().authenticated()
                 )
-                .csrf(csrf -> csrf.disable())  // Disabling CSRF protection
-                .addFilterAfter(new JwtAuthenticationFilter(), BasicAuthenticationFilter.class)
+                .csrf(csrf -> csrf.disable())
+                .addFilterBefore(rateLimitingFilter, BasicAuthenticationFilter.class)
                 .addFilterBefore(new JwtValidationFilter(), BasicAuthenticationFilter.class)
+                .addFilterAfter(new JwtAuthenticationFilter(), BasicAuthenticationFilter.class)
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(Customizer.withDefaults());
 
         return http.build();
     }
-
-
 }

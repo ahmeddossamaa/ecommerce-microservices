@@ -16,29 +16,24 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-
 @Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-
         log.info("Inside generator filter ....");
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (null != authentication) {
-
+        if (authentication != null && authentication.isAuthenticated()) {
             SecretKey key = Keys.hmacShaKeyFor(SecurityConstants.JWT_KEY.getBytes());
 
             String jwt = Jwts.builder()
-                    .setSubject("JWT Token")
-                    .claim("username", authentication.getName())
+                    .setSubject(authentication.getName())
                     .setIssuedAt(new Date())
                     .setExpiration(new Date(new Date().getTime() + 30000000)) // expiration time
                     .signWith(key).compact();
 
-            response.setHeader(SecurityConstants.JWT_HEADER, jwt);
+            response.setHeader(SecurityConstants.JWT_HEADER, "Bearer " + jwt);
         }
 
         filterChain.doFilter(request, response);
@@ -46,7 +41,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-
         return !request.getServletPath().equals("/api/users/login");
     }
 }

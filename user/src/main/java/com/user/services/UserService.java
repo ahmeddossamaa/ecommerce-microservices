@@ -1,6 +1,7 @@
 package com.user.services;
 
 import com.user.Exception.UserException;
+import com.user.jwt.SecurityConstants;
 import com.user.models.User;
 import com.user.repositories.UserRepository;
 import io.jsonwebtoken.Claims;
@@ -14,13 +15,14 @@ import io.jsonwebtoken.security.Keys;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
-
 @Service
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final SecretKey jwtSecretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256); // Strong key generation
+
+    // Injecting secret key to ensure consistency
+    private final SecretKey jwtSecretKey = Keys.hmacShaKeyFor(SecurityConstants.JWT_KEY.getBytes());
 
     public User findUserByEmail(String email) throws UserException {
         User user = userRepository.findByEmail(email);
@@ -44,19 +46,20 @@ public class UserService {
                 .compact();
     }
 
-    public Claims validateJwtToken(String token) throws UserException {
-        try {
-            return Jwts.parserBuilder()
-                    .setSigningKey(jwtSecretKey)
-                    .build()
-                    .parseClaimsJws(token)
-                    .getBody();
-        } catch (ExpiredJwtException ex) {
-            throw new UserException("Token expired");
-        } catch (Exception ex) {
-            throw new UserException("Invalid token");
-        }
-    }
+    // Uncomment and use this method for validation if needed
+    // public Claims validateJwtToken(String token) throws UserException {
+    //     try {
+    //         return Jwts.parserBuilder()
+    //                 .setSigningKey(jwtSecretKey)
+    //                 .build()
+    //                 .parseClaimsJws(token)
+    //                 .getBody();
+    //     } catch (ExpiredJwtException ex) {
+    //         throw new UserException("Token expired");
+    //     } catch (Exception ex) {
+    //         throw new UserException("Invalid token");
+    //     }
+    // }
 
     public User registerUser(User user) throws UserException {
         User existingUser = userRepository.findByEmail(user.getEmail());
