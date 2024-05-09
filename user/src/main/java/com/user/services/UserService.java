@@ -3,12 +3,15 @@ package com.user.services;
 import com.user.Exception.UserException;
 import com.user.models.User;
 import com.user.repositories.UserRepository;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+
 import javax.crypto.SecretKey;
 import java.util.Date;
 
@@ -39,6 +42,20 @@ public class UserService {
                 .setExpiration(new Date(System.currentTimeMillis() + 300_000))  // 5 minutes
                 .signWith(jwtSecretKey)
                 .compact();
+    }
+
+    public Claims validateJwtToken(String token) throws UserException {
+        try {
+            return Jwts.parserBuilder()
+                    .setSigningKey(jwtSecretKey)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (ExpiredJwtException ex) {
+            throw new UserException("Token expired");
+        } catch (Exception ex) {
+            throw new UserException("Invalid token");
+        }
     }
 
     public User registerUser(User user) throws UserException {

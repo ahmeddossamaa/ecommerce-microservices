@@ -42,10 +42,22 @@ public class UserController {
         return new ResponseEntity<>(registeredUser, HttpStatus.CREATED);
     }
 
-
     @PostMapping("/login")
-    public ResponseEntity<?> signInHandler(@RequestBody User loginRequest) {
+    public ResponseEntity<?> signInHandler(@RequestHeader(value = "Authorization", required = false) String token,
+                                           @RequestBody User loginRequest) {
         log.info("Attempting to log in user: {}", loginRequest.getEmail());
+
+        if (token != null && token.startsWith("Bearer ")) {
+            String jwtToken = token.substring(7);
+            try {
+                userService.validateJwtToken(jwtToken);
+                log.info("Token is valid for user: {}", loginRequest.getEmail());
+                return ResponseEntity.ok().body("Login successful with existing token");
+            } catch (UserException ex) {
+                log.error("Token validation failed for user: {} - {}", loginRequest.getEmail(), ex.getMessage());
+            }
+        }
+
         try {
             User user = userService.findUserByEmail(loginRequest.getEmail());
             if (user == null) {
@@ -53,14 +65,12 @@ public class UserController {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed: Invalid email or password");
             }
 
-
             if (!userService.validatePassword(loginRequest.getPassword(), user.getPassword())) {
                 log.error("Login failed for user: {} - Invalid password", loginRequest.getEmail());
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed: Invalid email or password");
             }
 
             log.info("Authentication successful for user: {}", loginRequest.getEmail());
-
 
             String jwt = userService.generateJwtToken(user);
 
@@ -75,5 +85,4 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed: An error occurred");
         }
     }
-
 }
