@@ -24,7 +24,6 @@ function ProductPage() {
 
   return (
     <div className="product-page">
-      <Header />
       <Navbar />
       <div className="products">
         {products.map((product) => (
@@ -36,7 +35,6 @@ function ProductPage() {
           />
         ))}
       </div>
-      <FooterSection />
     </div>
   );
 }
