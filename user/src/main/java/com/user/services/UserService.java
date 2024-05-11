@@ -1,13 +1,10 @@
 package com.user.services;
 
 import com.user.Exception.UserException;
-import com.user.jwt.SecurityConstants;
+import com.user.config.SecurityConstants;
 import com.user.models.User;
 import com.user.repositories.UserRepository;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

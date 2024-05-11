@@ -16,6 +16,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import com.user.jwt.JwtAuthenticationFilter;
 import com.user.jwt.JwtValidationFilter;
+
+import java.util.Arrays;
 import java.util.Collections;
 
 @Configuration
@@ -37,10 +39,10 @@ public class SecurityConfig {
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .cors(cors -> cors.configurationSource(request -> {
                     CorsConfiguration cfg = new CorsConfiguration();
-                    cfg.setAllowedOriginPatterns(Collections.singletonList("*"));
-                    cfg.setAllowedMethods(Collections.singletonList("*"));
+                    cfg.setAllowedOrigins(Collections.singletonList("http://localhost:3000")); // Explicitly allow localhost:3000
+                    cfg.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                     cfg.setAllowCredentials(true);
-                    cfg.setAllowedHeaders(Collections.singletonList("*"));
+                    cfg.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
                     cfg.setExposedHeaders(Collections.singletonList("Authorization"));
                     return cfg;
                 }))
