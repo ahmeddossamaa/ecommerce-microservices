@@ -38,7 +38,7 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<User> signUpUserHandler(@Validated @RequestBody User user) throws UserException {
+    public ResponseEntity<User> signUpUserHandler( @RequestBody User user) throws UserException {
         user.setUserName(XSSUtil.sanitize(user.getUserName()));
         user.setEmail(XSSUtil.sanitize(user.getEmail()));
         // No need to sanitize the password
