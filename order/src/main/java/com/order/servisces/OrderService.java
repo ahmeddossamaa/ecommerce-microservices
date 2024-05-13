@@ -1,5 +1,8 @@
 package com.order.servisces;
 
+import com.order.clients.ProductClient;
+import com.order.dto.OrderDto;
+import com.order.dto.ProductDto;
 import com.order.models.Order;
 import com.order.models.OrderProduct;
 import com.order.repositories.OrderProductRepository;
@@ -10,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Time;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -18,12 +22,45 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final OrderProductRepository orderProductRepository;
 
+    private final ProductClient productClient;
+
     public List<Order> getOrders(){
         return this.orderRepository.findAll();
     }
 
-    public Order getOrder(Integer id){
-        return this.orderRepository.findById(id).orElseThrow();
+    public OrderDto getOrder(Integer id){
+        Order order = this.orderRepository.findById(id).orElseThrow();
+
+        List<ProductDto> products = this.productClient.getProductById(id).getBody();
+
+        OrderDto orderDto = new OrderDto(order);
+
+        orderDto.setProducts(products);
+
+        return orderDto;
+    }
+
+    public OrderDto createOrder(OrderDto orderDto){
+        Order order = new Order(orderDto.getUser_id(), orderDto.getTotal_price());
+
+        this.orderRepository.save(order);
+
+        this.orderProductRepository.saveAll(
+            orderDto
+            .getProducts()
+            .stream()
+            .map(
+                p -> new OrderProduct(
+                    orderDto.getId(),
+                    p.getId(),
+                    1,
+                    p.getPrice()
+                )
+            )
+            .collect(Collectors.toList())
+        );
+
+        return orderDto;
     }
 
     public void deleteOrder(Integer id) {

@@ -23,34 +23,34 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
-        return http.getSharedObject(AuthenticationManagerBuilder.class).build();
-    }
+    // @Bean
+    // public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
+    //     return http.getSharedObject(AuthenticationManagerBuilder.class).build();
+    // }
 
-    @Bean
-    public SecurityFilterChain mySecurityConfig(HttpSecurity http) throws Exception {
-        // CORS configuration
-        http
-                .sessionManagement(sessionMangement -> sessionMangement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .cors(cors -> {
-                    cors.configurationSource(request -> {
-                        CorsConfiguration cfg = new CorsConfiguration();
-                        cfg.setAllowedOriginPatterns(Collections.singletonList("*"));
-                        cfg.setAllowedMethods(Collections.singletonList("*"));
-                        cfg.setAllowCredentials(true);
-                        cfg.setAllowedHeaders(Collections.singletonList("*"));
-                        return cfg;
-                    });
-                })
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, "/api/users/**").permitAll()
-                        .anyRequest().authenticated()
-                )
-                .csrf(csrf -> csrf.disable())  // Disabling CSRF protection
-                .httpBasic(Customizer.withDefaults())
-                .formLogin(Customizer.withDefaults());
+    // @Bean
+    // public SecurityFilterChain mySecurityConfig(HttpSecurity http) throws Exception {
+    //     // CORS configuration
+    //     http
+    //             .sessionManagement(sessionMangement -> sessionMangement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+    //             .cors(cors -> {
+    //                 cors.configurationSource(request -> {
+    //                     CorsConfiguration cfg = new CorsConfiguration();
+    //                     cfg.setAllowedOriginPatterns(Collections.singletonList("*"));
+    //                     cfg.setAllowedMethods(Collections.singletonList("*"));
+    //                     cfg.setAllowCredentials(true);
+    //                     cfg.setAllowedHeaders(Collections.singletonList("*"));
+    //                     return cfg;
+    //                 });
+    //             })
+    //             .authorizeHttpRequests(auth -> auth
+    //                     .requestMatchers(HttpMethod.POST, "/api/users/**").permitAll()
+    //                     .anyRequest().authenticated()
+    //             )
+    //             .csrf(csrf -> csrf.disable())  // Disabling CSRF protection
+    //             .httpBasic(Customizer.withDefaults())
+    //             .formLogin(Customizer.withDefaults());
 
-        return http.build();
-    }
+    //     return http.build();
+    // }
 }

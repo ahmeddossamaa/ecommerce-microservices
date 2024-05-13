@@ -29,39 +29,39 @@ public class JwtValidationFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 
-		log.info("Inside JWT validation filter.");
+		// log.info("Inside JWT validation filter.");
 
-		String jwt = request.getHeader(SecurityConstants.JWT_HEADER);
+		// String jwt = request.getHeader(SecurityConstants.JWT_HEADER);
 
-		if (jwt != null) {
+		// if (jwt != null) {
 
-			try {
-				// Extracting the word Bearer
-				jwt = jwt.substring(7);
+		// 	try {
+		// 		// Extracting the word Bearer
+		// 		jwt = jwt.substring(7);
 
-				SecretKey key = Keys.hmacShaKeyFor(SecurityConstants.JWT_KEY.getBytes());
+		// 		SecretKey key = Keys.hmacShaKeyFor(SecurityConstants.JWT_KEY.getBytes());
 
-				Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt).getBody();
+		// 		Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt).getBody();
 
-				String username = String.valueOf(claims.get("username"));
+		// 		String username = String.valueOf(claims.get("username"));
 
-				List<GrantedAuthority> authorities = new ArrayList<>();
+		// 		List<GrantedAuthority> authorities = new ArrayList<>();
 
-				Authentication auth = new UsernamePasswordAuthenticationToken(username, null, authorities);
+		// 		Authentication auth = new UsernamePasswordAuthenticationToken(username, null, authorities);
 
-				SecurityContextHolder.getContext().setAuthentication(auth);
+		// 		SecurityContextHolder.getContext().setAuthentication(auth);
 
-			} catch (Exception e) {
-				throw new BadCredentialsException("Invalid JWT Token received.");
-			}
-		}
+		// 	} catch (Exception e) {
+		// 		throw new BadCredentialsException("Invalid JWT Token received.");
+		// 	}
+		// }
 
-		filterChain.doFilter(request, response);
+		// filterChain.doFilter(request, response);
 	}
 
 	@Override
 	protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
 
-		return request.getServletPath().equals("/api/users/login");
+		return false;
 	}
 }

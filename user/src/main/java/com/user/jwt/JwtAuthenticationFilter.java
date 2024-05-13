@@ -26,27 +26,27 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         log.info("Inside generator filter ....");
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (null != authentication) {
+        // Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // if (null != authentication) {
 
-            SecretKey key = Keys.hmacShaKeyFor(SecurityConstants.JWT_KEY.getBytes());
+        //     SecretKey key = Keys.hmacShaKeyFor(SecurityConstants.JWT_KEY.getBytes());
 
-            String jwt = Jwts.builder()
-                    .setSubject("JWT Token")
-                    .claim("username", authentication.getName())
-                    .setIssuedAt(new Date())
-                    .setExpiration(new Date(new Date().getTime() + 30000000)) // expiration time
-                    .signWith(key).compact();
+        //     String jwt = Jwts.builder()
+        //             .setSubject("JWT Token")
+        //             .claim("username", authentication.getName())
+        //             .setIssuedAt(new Date())
+        //             .setExpiration(new Date(new Date().getTime() + 30000000)) // expiration time
+        //             .signWith(key).compact();
 
-            response.setHeader(SecurityConstants.JWT_HEADER, jwt);
-        }
+        //     response.setHeader(SecurityConstants.JWT_HEADER, jwt);
+        // }
 
-        filterChain.doFilter(request, response);
+        // filterChain.doFilter(request, response);
     }
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
 
-        return !request.getServletPath().equals("/api/users/login");
+        return false;
     }
 }

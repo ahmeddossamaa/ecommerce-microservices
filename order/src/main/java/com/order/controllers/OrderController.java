@@ -22,7 +22,6 @@ import java.util.UUID;
 public class OrderController {
 
     private final OrderService orderService;
-    private final ProductClient productClient;
 
     @GetMapping("")
     public ResponseEntity<List<Order>> getAll(){
@@ -30,43 +29,24 @@ public class OrderController {
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
-    @GetMapping("/products")
-    public ResponseEntity<List<ProductDto>> getAllProducts(){
-        List<ProductDto> products = this.productClient.getAll().getBody();
-
-        return new ResponseEntity<>(products, HttpStatus.OK);
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<OrderDto> getOne(@PathVariable Integer id){
-        Order order = this.orderService.getOrder(id);
-        List<ProductDto> products = this.productClient.getProductById(id).getBody();
-
-        OrderDto orderDto = new OrderDto(order);
-
-        orderDto.setProducts(products);
+        OrderDto orderDto = this.orderService.getOrder(id);
 
         return new ResponseEntity<>(orderDto, HttpStatus.OK);
     }
 
+    @PostMapping("/")
+    public ResponseEntity<OrderDto> create(@RequestBody OrderDto orderDto) {
+        OrderDto createdOrder = orderService.createOrder(orderDto);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdOrder);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable int id) {
-       orderService.deleteOrder(id);
+        orderService.deleteOrder(id);
+
         return new ResponseEntity<>("Deleted Successfully!", HttpStatus.OK);
     }
-
-    @PostMapping("/create-with-products")
-    public ResponseEntity<Order> createOrderWithProducts(
-            @RequestParam UUID user_id,
-            @RequestParam Double total_price,
-            @RequestParam Time created_at,
-            @RequestBody List<OrderProduct> orderProducts
-    ) {
-        // Create the Order and associated OrderProduct records
-        Order createdOrder = orderService.createOrderWithProducts(
-              user_id, total_price, created_at, orderProducts);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdOrder); // Return the created Order
-    }
-
 }

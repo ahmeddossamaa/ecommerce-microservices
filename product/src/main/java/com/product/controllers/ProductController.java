@@ -24,7 +24,7 @@ public class ProductController {
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
-    @GetMapping("/order")
+    @GetMapping("/order/{id}")
     public ResponseEntity<List<Product>> getAllByOrderId(@PathVariable Integer id){
         List<Product> products = this.productService.getProductsByOrderId(id);
 

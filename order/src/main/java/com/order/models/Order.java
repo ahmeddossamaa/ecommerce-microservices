@@ -3,6 +3,7 @@ package com.order.models;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.sql.Time;
 import java.util.List;
@@ -18,25 +19,27 @@ import java.util.UUID;
 
 
 public class Order {
-    private @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
     private UUID user_id;
+
     private Double total_price;
+
+    @CreatedDate()
     private Time created_at;
-//    private List<Product> products;
+
     public Order(Integer id){
         super();
-        this.id = id;
 
+        this.id = id;
     }
-    public Order(Integer id, Double total_price,UUID user_id , Time time){
+
+    public Order(UUID user_id, Double total_price){
         super();
-        this.id = id;
-        this.user_id=user_id;
+
+        this.user_id = user_id;
         this.total_price = total_price;
-        this.created_at = time ;
-
     }
-
-
 }

@@ -1,12 +1,5 @@
 version: '3'
 
-#x-environment: &default-env
-#  SPRING_DATASOURCE_URL: jdbc:postgresql://dpg-coju2f8cmk4c73c40l60-a.oregon-postgres.render.com/ecommerce_vlw8
-#  SPRING_DATASOURCE_USERNAME: batman
-#  SPRING_DATASOURCE_PASSWORD: kclJanmxhFfyx0o5bEgix6OhwGReGTPy
-#  SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
-#  SPRING_JPA_HIBERNATE_DDL_AUTO: update
-
 services:
   api-gateway:
     restart: always
@@ -38,8 +31,6 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8082:8082"
-#    environment:
-#      <<: *default-env
     env_file:
       - .env
 
@@ -55,6 +46,18 @@ services:
     depends_on:
       - user
       - product
+
+  payment:
+    container_name: payment-service-container
+    build:
+      context: ./payment
+      dockerfile: Dockerfile
+    ports:
+      - "8085:8085"
+    env_file:
+      - .env
+    depends_on:
+      - order
 
   # frontend:
   #   container_name: frontend-service-container

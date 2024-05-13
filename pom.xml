@@ -19,5 +19,6 @@
         <module>user</module>
         <module>api-gateway</module>
         <module>order</module>
+        <module>payment</module>
     </modules>
 </project>
