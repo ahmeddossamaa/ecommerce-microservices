@@ -1,7 +1,8 @@
 package com.order.servisces;
 
 import com.order.clients.ProductClient;
-import com.order.dto.OrderDto;
+import com.order.dto.OrderRequestDto;
+import com.order.dto.OrderResponseDto;
 import com.order.dto.ProductDto;
 import com.order.models.Order;
 import com.order.models.OrderProduct;
@@ -28,30 +29,30 @@ public class OrderService {
         return this.orderRepository.findAll();
     }
 
-    public OrderDto getOrder(Integer id){
+    public OrderResponseDto getOrder(Integer id){
         Order order = this.orderRepository.findById(id).orElseThrow();
 
         List<ProductDto> products = this.productClient.getProductById(id).getBody();
 
-        OrderDto orderDto = new OrderDto(order);
+        OrderResponseDto orderResponseDto = new OrderResponseDto(order);
 
-        orderDto.setProducts(products);
+        orderResponseDto.setProducts(products);
 
-        return orderDto;
+        return orderResponseDto;
     }
 
-    public OrderDto createOrder(OrderDto orderDto){
-        Order order = new Order(orderDto.getUser_id(), orderDto.getTotal_price());
-
-        this.orderRepository.save(order);
+    public OrderResponseDto createOrder(OrderRequestDto orderRequestDto){
+        Order order = this.orderRepository.save(
+            new Order(orderRequestDto.getUser_id(), orderRequestDto.getTotal_price())
+        );
 
         this.orderProductRepository.saveAll(
-            orderDto
+            orderRequestDto
             .getProducts()
             .stream()
             .map(
                 p -> new OrderProduct(
-                    orderDto.getId(),
+                    order.getId(),
                     p.getId(),
                     1,
                     p.getPrice()
@@ -60,7 +61,11 @@ public class OrderService {
             .collect(Collectors.toList())
         );
 
-        return orderDto;
+        OrderResponseDto orderResponseDto = new OrderResponseDto(order);
+
+        orderResponseDto.setProducts(orderRequestDto.getProducts());
+
+        return orderResponseDto;
     }
 
     public void deleteOrder(Integer id) {

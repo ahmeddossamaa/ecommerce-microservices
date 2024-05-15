@@ -3,6 +3,7 @@ package com.order.models;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CurrentTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.sql.Time;
@@ -16,8 +17,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-
-
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +26,7 @@ public class Order {
 
     private Double total_price;
 
-    @CreatedDate()
+    @CurrentTimestamp()
     private Time created_at;
 
     public Order(Integer id){

@@ -1,19 +1,14 @@
 package com.order.controllers;
-import com.order.clients.ProductClient;
-import com.order.dto.OrderDto;
-import com.order.dto.ProductDto;
+import com.order.dto.OrderRequestDto;
+import com.order.dto.OrderResponseDto;
 import com.order.models.Order;
-import com.order.models.OrderProduct;
-import com.order.models.Product;
 import com.order.servisces.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Time;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,15 +25,15 @@ public class OrderController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<OrderDto> getOne(@PathVariable Integer id){
-        OrderDto orderDto = this.orderService.getOrder(id);
+    public ResponseEntity<OrderResponseDto> getOne(@PathVariable Integer id){
+        OrderResponseDto orderResponseDto = this.orderService.getOrder(id);
 
-        return new ResponseEntity<>(orderDto, HttpStatus.OK);
+        return new ResponseEntity<>(orderResponseDto, HttpStatus.OK);
     }
 
-    @PostMapping("/")
-    public ResponseEntity<OrderDto> create(@RequestBody OrderDto orderDto) {
-        OrderDto createdOrder = orderService.createOrder(orderDto);
+    @PostMapping("")
+    public ResponseEntity<OrderResponseDto> create(@RequestBody OrderRequestDto orderRequestDto) {
+        OrderResponseDto createdOrder = orderService.createOrder(orderRequestDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdOrder);
     }

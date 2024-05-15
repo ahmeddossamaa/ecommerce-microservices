@@ -31,15 +31,16 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> signInHandler(@RequestBody User loginRequest) {
-        log.info("Inside login handler: " + loginRequest.getEmail() + loginRequest.getPassword());
+    public ResponseEntity<String> signInHandler(@RequestBody User loginRequest) {
+//        return ResponseEntity.ok().body("Test");
+//        log.info("Inside login handler: " + loginRequest.getEmail() + loginRequest.getPassword());
         try {
             User user = userService.findUserByEmail(loginRequest.getEmail());
-            if (passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
-                return ResponseEntity.ok().body("Login successful");
-            } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed: Invalid email or password");
+            if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
+                throw new UserException();
             }
+
+            return ResponseEntity.ok().body(user.getId().toString());
         } catch (UserException ex) {
             log.info("Login failed: " + ex.getMessage());
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed: Invalid email or password");
