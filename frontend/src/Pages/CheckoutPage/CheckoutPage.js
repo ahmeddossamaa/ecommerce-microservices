@@ -13,13 +13,13 @@ const imageList = images.keys().map((image) => images(image));
 
 function CheckoutPage() {
   async function login() {
-    axios.get('http://127.0.0.1:8080/api/orders/1').then(data => {
-      console.log(data);
-    });
+    // axios.get('http://127.0.0.1:8080/api/orders/1').then(data => {
+    //   console.log(data);
+    // });
 
-    axios.get('http://127.0.0.1:8080/api/users').then(response => {
-      console.log(response);
-    })
+    // axios.get('http://127.0.0.1:8080/api/users').then(response => {
+    //   console.log(response);
+    // })
     
     // axios.post('http://127.0.0.1:8080/api/users/signup', {
     //   userName: 'test',

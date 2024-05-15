@@ -4,6 +4,9 @@ import com.payment.dto.PaymentRequestDto;
 import com.payment.models.Payment;
 import com.payment.services.PaymentService;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +15,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/payments")
 public class PaymentController {
     private final PaymentService paymentService;
+
+    @GetMapping("")
+    public ResponseEntity<List<Payment>> getAll(){
+        List<Payment> payments = this.paymentService.getPayments();
+
+        return ResponseEntity.ok().body(payments);
+    }
 
     @PostMapping("")
     public ResponseEntity<Payment> create(@RequestBody PaymentRequestDto paymentRequestDto) {
