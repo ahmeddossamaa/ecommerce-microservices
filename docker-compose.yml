@@ -59,12 +59,12 @@ services:
     depends_on:
       - order
 
-  frontend:
-    container_name: frontend-service-container
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
-    depends_on:
-      - api-gateway
+  # frontend:
+  #   container_name: frontend-service-container
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "3000:3000"
+  #   depends_on:
+  #     - api-gateway
