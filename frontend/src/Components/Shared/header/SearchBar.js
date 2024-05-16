@@ -1,10 +1,14 @@
 import React from "react";
 import { useState } from "react";
+import axios from 'axios';
 
 const SearchBar = () => {
   const [searchValue, setSearchValue] = useState("");
-  const applySearch = () => {
-    console.log("Searching for:", searchValue);
+  const applySearch = async () => {
+    const response = await axios.get(`http://127.0.0.1:8080/api/products/search/${searchValue}`);
+
+    console.log(response);
+    // console.log("Searching for:", searchValue);
   };
   return (
     <div className="search-bar">

@@ -44,9 +44,9 @@ public class ProductController {
         productService.deleteProduct(id);
         return new ResponseEntity<>("Deleted Successfully!", HttpStatus.OK);
     }
-    @RequestMapping ("/{name}")
+    @GetMapping ("/search/{name}")
     public ResponseEntity<List<Product>> search(@PathVariable String name) {
         List<Product> existingProducts=this.productService.searchProducts(name);
-        return new ResponseEntity<>(existingProducts, HttpStatus.FOUND);
+        return new ResponseEntity<>(existingProducts, HttpStatus.OK);
     }
 }
