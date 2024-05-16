@@ -14,13 +14,12 @@ const BlockItemsGroup = () => {
   return (
     <div className="block-items-group">
       <div className="block-image">
-        <img src={imageList["block-image"]} alt="Block alt" />
+        <img src={imageList["zblock-image"]} alt="Block alt" />
         <div className="image-content">
           <h3>Title</h3>
           <button>Source now</button>
         </div>
       </div>
-      {/* Repeat the block-item structure for each item */}
       {Object.keys(imageList)
         .slice(0, 8)
         .map((imageName, index) => (

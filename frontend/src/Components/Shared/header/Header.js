@@ -20,10 +20,14 @@ const Header = () => {
       <Logo />
       <SearchBar />
       <div className="icons">
-        <a href=""><Icon name="Profile" icon={imageList["person"]} /></a>
-        <a href="/products"><Icon name="Messages" icon={imageList["message"]} /></a>
-        <a href=""><Icon name="Orders" icon={imageList["favorite"]} /></a>
-        <a href=""><Icon name="My Cart" icon={imageList["shopping_cart"]} /></a>
+        <Icon name="Home" icon={imageList["home"]} link="/" />
+        <Icon name="products" icon={imageList["products"]} link="/products" />
+        <Icon
+          name="My Cart"
+          icon={imageList["shopping_cart"]}
+          link="/checkout"
+        />
+        <Icon name="Profile" icon={imageList["person"]} link="/login" />
       </div>
     </header>
   );

@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ProductCard from "../../Components/ProductsPage/ProductCard/ProductCard.js";
-import Header from "../../Components/Shared/header/Header.js";
 import Navbar from "../../Components/Shared/navbar/Navbar.js";
-import FooterSection from "../../Components/Shared/FooterSection/FooterSection.js";
 import "./ProductsPage.css";
 
 function ProductPage() {

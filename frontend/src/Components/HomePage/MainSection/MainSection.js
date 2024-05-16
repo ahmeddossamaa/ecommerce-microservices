@@ -25,7 +25,6 @@ const MainSection = () => {
           <li>Category 8</li>
           <li>Category 9</li>
           <li>Category 10</li>
-          {/* Add more categories here */}
         </ul>
       </div>
       <div className="banner-section">
@@ -47,9 +46,15 @@ const MainSection = () => {
               <div>let's get started</div>
             </div>
           </div>
-          <button className="signup-button">Join now</button>
+          <button className="signup-button">
+            <a href="/register">
+              <span>Join now</span>
+            </a>
+          </button>
           <button className="login-button">
-            <span>Log in</span>
+            <a href="/login">
+              <span>Log in</span>
+            </a>
           </button>
         </div>
         <div className="block block2">

@@ -1,9 +1,9 @@
 import React from "react";
 
-const Icon = ({ name, icon }) => {
+const Icon = ({ name, icon, link }) => {
   return (
     <div className="icon">
-      <a href="">
+      <a href={link}>
         <img src={icon} alt={name} />
       </a>
       <span>{name}</span>

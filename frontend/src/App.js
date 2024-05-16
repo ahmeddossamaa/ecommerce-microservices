@@ -11,7 +11,7 @@ import FooterSection from "./Components/Shared/FooterSection/FooterSection.js";
 
 function App() {
   return (
-    <div>
+    <div className="main-app">
       <Header />
       <Router>
         <Routes>

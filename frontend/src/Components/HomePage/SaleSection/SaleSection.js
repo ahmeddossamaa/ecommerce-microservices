@@ -64,7 +64,7 @@ const SaleSection = () => {
         <div className="category-item" key={index}>
           <img src={imageList[imageName]} alt={imageName} />
           <h3>{imageName}</h3>
-          <div className="discount-badge">-50%</div>
+          <div className="discount-badge">-{(index + 1) * 10}%</div>
         </div>
       ))}
     </div>
