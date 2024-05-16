@@ -20,10 +20,10 @@ const Header = () => {
       <Logo />
       <SearchBar />
       <div className="icons">
-        <Icon name="Profile" icon={imageList["person"]} />
-        <Icon name="Messages" icon={imageList["message"]} />
-        <Icon name="Orders" icon={imageList["favorite"]} />
-        <Icon name="My Cart" icon={imageList["shopping_cart"]} />
+        <a href=""><Icon name="Profile" icon={imageList["person"]} /></a>
+        <a href="/products"><Icon name="Messages" icon={imageList["message"]} /></a>
+        <a href=""><Icon name="Orders" icon={imageList["favorite"]} /></a>
+        <a href=""><Icon name="My Cart" icon={imageList["shopping_cart"]} /></a>
       </div>
     </header>
   );
